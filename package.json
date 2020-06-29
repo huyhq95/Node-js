@@ -1,0 +1,19 @@
+{
+  "name": "koajs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promise": "^4.2.8",
+    "isomorphic-fetch": "^2.2.1",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^2.5.0",
+    "koa-router": "^9.0.1",
+    "koa-session": "^6.0.0"
+  }
+}
