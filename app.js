@@ -2,7 +2,7 @@ var koa = require('koa');
 const session = require('koa-session');
 const bodyParser = require('koa-bodyparser');
 var app = new koa();
-var router = require('./routes/auth/router');
+var router = require('./routes');
 
 app.keys = ['koajs'];
 app.use(bodyParser());
