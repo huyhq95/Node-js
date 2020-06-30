@@ -1,22 +1,37 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 var Router = require('koa-router');
+var Models = require('../../handlers/models');
 
 const rootRouter = new Router()
     .get('/', (ctx, next) => {
         ctx.body = 'Hello World';
     })
     .post('/login', async (ctx, next) => {
-        if (ctx.request.body.username == 'admin' && ctx.request.body.password == '123') {
+        var { username, password } = ctx.request.body;
+        var user = await Models.logIn(ctx, username, password);
+        if (user == true) {
             ctx.session.user = ctx.request.body.username;
             ctx.body = 'Login successfully';
         } else {
+            ctx.status = 401;
             ctx.body = 'Unauthorized';
         }
     })
     .get('/logout', (ctx, next) => {
         ctx.session = null
         ctx.redirect('/api')
+    })
+    .post('/signup', async (ctx, next) => {
+        var { username, password } = ctx.request.body;
+        var checkUserExist = await Models.checkUserExist(ctx, username);
+
+        if (!checkUserExist) {
+            await Models.signUp(ctx, username, password);
+            ctx.body = 'Signup successfully';
+        } else {
+            ctx.body = 'User exist';
+        }
     })
 
 module.exports = rootRouter;
