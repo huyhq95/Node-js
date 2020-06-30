@@ -9,15 +9,28 @@ const employeesRouter = new Router()
         fetch('http://dummy.restapiexample.com/api/v1/employees')
             .then(async response => {
                 const jsonData = await response.json();
-                await fs.writeFile("employees.json", JSON.stringify(jsonData.data), function (err) {
-                });
+                ctx.db.collection('employees').bulkWrite(jsonData.data.map((obj) => {
+                    const { id, ...update } = obj;
+                    return {
+                        updateOne: {
+                            filter: { _id: id },
+                            update: {
+                                $setOnInsert: { _id: id },
+                                $set: update,
+                            },
+                            upsert: true,
+                        },
+                    };
+                }));
+                ctx.db.collection('employees').createIndex( { employee_name: "text" } )
             })
             .catch(function (error) {
                 console.log('error', error);
             });
     })
     .get('/employees', verifyRequest, async (ctx, next) => {
-        let data = fs.readFileSync('employees.json', 'utf8')
+        var { name } = ctx.request.query;
+        let data = name ? await ctx.db.collection('employees').find( { $text: { $search: name } } ).toArray() : await ctx.db.collection('employees').find().toArray();
         ctx.set('Content-Type', 'application/json');
         ctx.body = JSON.stringify(data);
     })

@@ -9,10 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "es6-promise": "^4.2.8",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^2.13.0",
     "koa-bodyparser": "^2.5.0",
+    "koa-mongo": "^1.9.1",
     "koa-router": "^9.0.1",
     "koa-session": "^6.0.0"
   }
