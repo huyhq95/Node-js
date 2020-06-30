@@ -1,7 +1,7 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 var Router = require('koa-router');
-const bcrypt = require('bcrypt');
+var Models = require('../../handlers/models');
 
 const rootRouter = new Router()
     .get('/', (ctx, next) => {
@@ -9,22 +9,14 @@ const rootRouter = new Router()
     })
     .post('/login', async (ctx, next) => {
         var { username, password } = ctx.request.body;
-
-        await ctx.db.collection('users').findOne({
-            'username': username
-        }).then(async function (user) {
-            if (!user) {
-                return false;
-            } else {
-                if (bcrypt.compareSync(password, user.password) == true) {
-                    ctx.session.user = ctx.request.body.username;
-                    ctx.body = 'Login successfully';
-                } else {
-                    ctx.status = 401;
-                    ctx.body = 'Unauthorized';
-                }
-            }
-        });
+        var user = await Models.logIn(ctx, username, password);
+        if (user == true) {
+            ctx.session.user = ctx.request.body.username;
+            ctx.body = 'Login successfully';
+        } else {
+            ctx.status = 401;
+            ctx.body = 'Unauthorized';
+        }
     })
     .get('/logout', (ctx, next) => {
         ctx.session = null
@@ -32,10 +24,10 @@ const rootRouter = new Router()
     })
     .post('/signup', async (ctx, next) => {
         var { username, password } = ctx.request.body;
+        var checkUserExist = await Models.checkUserExist(ctx, username);
 
-        var checkUserExist = await ctx.db.collection('users').find({ "username": username }).toArray();
-        if (checkUserExist.length == 0) {
-            ctx.db.collection('users').insertOne({ "username": username, "password": bcrypt.hashSync(password, 10) });
+        if (!checkUserExist) {
+            await Models.signUp(ctx, username, password);
             ctx.body = 'Signup successfully';
         } else {
             ctx.body = 'User exist';
