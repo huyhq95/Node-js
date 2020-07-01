@@ -23,7 +23,7 @@ export default class Login extends React.Component {
 
   onSubmit = async () => {
     const { form } = this.state;
-    await fetch('http://127.0.0.1:3000/api/login', {
+    await fetch('/api/login', {
       method: 'POST',
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

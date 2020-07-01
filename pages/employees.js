@@ -10,13 +10,11 @@ export default class Employees extends React.Component {
         }
     }
     componentDidMount() {
-        const { session } = this.props.data;
-        if (!session) Router.push('/login')
         this.getListEmployees()
     }
 
     getListEmployees = async () => {
-        await fetch('http://127.0.0.1:3000/api/employees', {
+        await fetch('/api/employees', {
             method: 'POST',
         })
             .then(async res => {
@@ -27,7 +25,7 @@ export default class Employees extends React.Component {
     }
 
     onCrawlEmployees = async () => {
-        await fetch('http://127.0.0.1:3000/api/employees/crawl', {
+        await fetch('/api/employees/crawl', {
             method: 'POST',
         })
             .then(async res => {
@@ -65,8 +63,10 @@ export default class Employees extends React.Component {
     }
 }
 
-export async function getServerSideProps() {
-    const res = await fetch('http://127.0.0.1:3000/api/getSession')
-    const data = await res.json()
-    return { props: { data } }
-}
+export const getServerSideProps = async ({ res }) => {
+    if (res.session.user == undefined) {
+        res.statusCode = 302
+        res.setHeader('Location', `/login`)
+    }
+    return { props: {} }
+};

@@ -33,8 +33,5 @@ const rootRouter = new Router()
             ctx.body = 'User exist';
         }
     })
-    .get('/getSession', (ctx, next) => {
-        ctx.body = JSON.stringify({ 'session': ctx.session.user });
-    })
 
 module.exports = rootRouter;

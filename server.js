@@ -22,6 +22,7 @@ app.prepare().then(() => {
     .use(session(server))
   
   router.all('/(.*)', async (ctx, next) => {
+    ctx.res.session = ctx.session;
     await handle(ctx.req, ctx.res)
     ctx.respond = false
   })
