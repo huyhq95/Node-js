@@ -11,11 +11,11 @@ const rootRouter = new Router()
         var { username, password } = ctx.request.body;
         var user = await Models.logIn(ctx, username, password);
         if (user == true) {
-            ctx.session.user = ctx.request.body.username;
-            ctx.body = 'Login successfully';
+            ctx.session.user = username;
+            ctx.body = JSON.stringify({ 'status': true, 'msg': 'Login succesfully' });
         } else {
             ctx.status = 401;
-            ctx.body = 'Unauthorized';
+            ctx.body = JSON.stringify({ 'status': false, 'msg': 'Unauthorized' });
         }
     })
     .get('/logout', (ctx, next) => {
@@ -32,6 +32,9 @@ const rootRouter = new Router()
         } else {
             ctx.body = 'User exist';
         }
+    })
+    .get('/getSession', (ctx, next) => {
+        ctx.body = JSON.stringify({ 'session': ctx.session.user });
     })
 
 module.exports = rootRouter;
