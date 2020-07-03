@@ -11,11 +11,17 @@ class UserAPI extends DataSource {
     }
 
     async signup(email, username, password) {
-        return await this.context.db.collection('users').insertOne({
-            "email": email,
-            "username": username,
-            "password": bcrypt.hashSync(password, 10)
-        });
+        const user = await this.context.db.collection('users').findOne({ "username": username });
+        if (!user) {
+            return await this.context.db.collection('users').insertOne({
+                "email": email,
+                "username": username,
+                "password": bcrypt.hashSync(password, 10)
+            });
+        } else {
+            return false;
+        }
+
     }
 
     async login(username, password) {
@@ -37,7 +43,6 @@ class UserAPI extends DataSource {
         }
         return checkUserExists;
     }
-
 }
 
 module.exports = UserAPI;
