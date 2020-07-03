@@ -1,0 +1,41 @@
+{
+  "name": "Node.js-Training",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "apollo-boost": "^0.4.9",
+    "apollo-datasource": "^0.7.2",
+    "apollo-datasource-rest": "^0.9.3",
+    "apollo-server": "^2.15.1",
+    "apollo-server-koa": "^2.15.1",
+    "bcrypt": "^5.0.0",
+    "graphql": "^15.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-mongo": "^1.9.1",
+    "koa-router": "^9.1.0",
+    "koa-session": "^6.0.0",
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huyhq95/Node.js-Training.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huyhq95/Node.js-Training/issues"
+  },
+  "homepage": "https://github.com/huyhq95/Node.js-Training#readme"
+}
