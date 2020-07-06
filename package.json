@@ -5,14 +5,22 @@
   "main": "index.js",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
+    "@shopify/app-bridge-react": "^1.24.0",
+    "@shopify/koa-shopify-auth": "^3.1.64",
+    "@shopify/koa-shopify-graphql-proxy": "^4.0.1",
+    "@shopify/koa-shopify-webhooks": "^2.4.3",
+    "@shopify/polaris": "^4.26.1",
+    "@zeit/next-css": "^1.0.1",
     "apollo-boost": "^0.4.9",
     "apollo-datasource": "^0.7.2",
     "apollo-datasource-rest": "^0.9.3",
     "apollo-server": "^2.15.1",
     "apollo-server-koa": "^2.15.1",
     "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
     "graphql": "^15.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.2.1",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-mongo": "^1.9.1",
@@ -20,12 +28,16 @@
     "koa-session": "^6.0.0",
     "next": "^9.4.4",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-apollo": "^3.1.5",
+    "react-dom": "^16.13.1",
+    "store-js": "^2.0.4"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next dev"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "repository": {
     "type": "git",
